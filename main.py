@@ -22,6 +22,12 @@ def main() -> None:
     path = os.path.join(output_dir, "entry.txt")
     with open(path, "w", encoding="utf-8") as f:
         f.write(ENTRY + "\n")
+    # Read-back verification: the file must hold exactly the line above,
+    # within the 1-140 character gate, or the run is not a valid entry.
+    with open(path, "r", encoding="utf-8") as f:
+        written = f.read()
+    assert written == ENTRY + "\n", "entry.txt does not match ENTRY"
+    assert 1 <= len(ENTRY) <= 140, "entry outside 1-140 character gate"
 
 
 if __name__ == "__main__":
